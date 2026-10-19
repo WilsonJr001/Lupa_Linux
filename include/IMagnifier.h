@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
+#include "LupaTypes.h"
 #include <array>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Camada do modo leitura (equivalente à janela Reading.cs do original, que é
 // um formulário "TopMost" semitransparente e por isso é ampliado junto com a
@@ -47,4 +47,4 @@ public:
     virtual void shutdown() = 0;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

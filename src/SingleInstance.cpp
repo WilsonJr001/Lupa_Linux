@@ -6,14 +6,14 @@
 #include <sys/file.h>
 #include <unistd.h>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 SingleInstance::SingleInstance() {
     const char* runtime = std::getenv("XDG_RUNTIME_DIR");
     if (runtime && *runtime) {
-        _path = std::string(runtime) + "/glassbrick.lock";
+        _path = std::string(runtime) + "/lupa_linux.lock";
     } else {
-        _path = "/tmp/glassbrick-" + std::to_string(getuid()) + ".lock";
+        _path = "/tmp/lupa_linux-" + std::to_string(getuid()) + ".lock";
     }
 }
 
@@ -49,4 +49,4 @@ bool SingleInstance::acquire() {
     return true;
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

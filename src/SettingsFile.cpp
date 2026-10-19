@@ -6,7 +6,7 @@
 // de uma ação). "#" inicia um comentário. Também lê o formato antigo
 // (glassbrick_config.json), que era "Chave=valor" sem seções.
 
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
@@ -19,7 +19,7 @@
 #include <map>
 #include <sstream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 namespace {
 
@@ -265,7 +265,7 @@ std::optional<std::pair<Modifiers, unsigned int>> parseBinding(const std::string
 // Leitura
 // ---------------------------------------------------------------------------
 
-bool GlassbrickSettings::loadFromFile(const std::string& filename, std::vector<std::string>& warnings) {
+bool LupaSettings::loadFromFile(const std::string& filename, std::vector<std::string>& warnings) {
     std::ifstream file(filename);
     if (!file.is_open()) return false;
 
@@ -476,14 +476,14 @@ bool GlassbrickSettings::loadFromFile(const std::string& filename, std::vector<s
 // Escrita
 // ---------------------------------------------------------------------------
 
-bool GlassbrickSettings::saveToFile(const std::string& filename) const {
+bool LupaSettings::saveToFile(const std::string& filename) const {
     std::ofstream file(filename);
     if (!file.is_open()) return false;
     file << toConfigText();
     return static_cast<bool>(file);
 }
 
-std::string GlassbrickSettings::toConfigText() const {
+std::string LupaSettings::toConfigText() const {
     std::ostringstream o;
     o.imbue(std::locale::classic());
 
@@ -501,7 +501,7 @@ std::string GlassbrickSettings::toConfigText() const {
         return out;
     };
 
-    o << "# Configuração da Lupa Linux (clone do Glassbrick)\n"
+    o << "# Configuração da Lupa Linux (lupa de tela inspirada no Glassbrick)\n"
          "#\n"
          "# Formato: Chave = valor. Linhas começando com # são comentários.\n"
          "# Valores inválidos são ignorados com um aviso no terminal (fica o valor padrão).\n"
@@ -595,7 +595,7 @@ std::string GlassbrickSettings::toConfigText() const {
 
 SettingsManager::SettingsManager(const std::string& configPath) : _configPath(configPath) {}
 
-std::string SettingsManager::defaultConfigPath() {
+static std::filesystem::path configBase() {
     std::filesystem::path base;
     if (const char* xdg = std::getenv("XDG_CONFIG_HOME"); xdg && *xdg) {
         base = xdg;
@@ -604,7 +604,15 @@ std::string SettingsManager::defaultConfigPath() {
     } else {
         base = ".";
     }
-    return (base / "glassbrick" / "glassbrick.conf").string();
+    return base;
+}
+
+std::string SettingsManager::defaultConfigPath() {
+    return (configBase() / "lupa_linux" / "lupa_linux.conf").string();
+}
+
+std::string SettingsManager::previousConfigPath() {
+    return (configBase() / "glassbrick" / "glassbrick.conf").string();
 }
 
 bool SettingsManager::load(std::vector<std::string>& warnings) {
@@ -618,7 +626,7 @@ bool SettingsManager::loadFrom(const std::string& path, std::vector<std::string>
 bool SettingsManager::applyPendingReload(std::vector<std::string>& warnings) {
     if (!_reloadRequested.exchange(false)) return false;
     // Lê fora do lock (arquivo pequeno, mas não há por que travar as outras threads)
-    GlassbrickSettings fresh;
+    LupaSettings fresh;
     if (!fresh.loadFromFile(_configPath, warnings)) {
         warnings.push_back("não foi possível ler " + _configPath + "; configurações mantidas");
         return false;
@@ -636,4 +644,4 @@ bool SettingsManager::save() {
     return _settings.saveToFile(_configPath);
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

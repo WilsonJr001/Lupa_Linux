@@ -1,4 +1,4 @@
-# Lupa Linux — clone do Glassbrick
+# Lupa Linux — lupa de tela inspirada no Glassbrick
 
 Clone para Linux (X11) da lupa de tela **Glassbrick** (Windows, C#/.NET), escrito em C++17 com Xlib + OpenGL.
 O código descompilado do original (`codigo_glassbrick/`) é a referência de comportamento. Ele, o binário
@@ -18,12 +18,12 @@ runtime `libXext.so.6`, `libXcomposite.so.1`, `libXfixes.so.3`, `libXi.so.6`, `l
 `libgobject-2.0.so.0`, `libglib-2.0.so.0`.
 
 ```sh
-make            # gera ./glassbrick
+make            # gera ./lupa_linux
 make test       # testes da Camera, do arquivo de configuração e da interface (sem precisar de tela)
-./glassbrick    # lê/cria ~/.config/glassbrick/glassbrick.conf e abre o ícone na bandeja
-./glassbrick --sem-interface      # sem ícone na bandeja / janela de configurações
-GLASSBRICK_DEBUG=1 ./glassbrick   # mostra eventos de foco/caret e do modo leitura
-./glassbrick --diagnostico        # o que a lupa enxerga do ambiente (para relatos de problemas)
+./lupa_linux    # lê/cria ~/.config/lupa_linux/lupa_linux.conf e abre o ícone na bandeja
+./lupa_linux --sem-interface      # sem ícone na bandeja / janela de configurações
+LUPA_LINUX_DEBUG=1 ./lupa_linux   # mostra eventos de foco/caret e do modo leitura
+./lupa_linux --diagnostico        # o que a lupa enxerga do ambiente (para relatos de problemas)
 ```
 
 Requer sessão **X11** com a extensão Composite (testado em XFCE/xfwm4 com compositor ligado,
@@ -57,7 +57,7 @@ main.cpp
  ├─ FocusTracker                   foco/caret/seleção de outros apps via AT-SPI2
  └─ UpdateLoop                     loop de 60 Hz (UpdateLoop.cs)
 
-ui/glassbrick_ui.py  (processo Python/GTK3 aberto pela lupa)  ícone na bandeja + janela de
+ui/lupa_linux_ui.py  (processo Python/GTK3 aberto pela lupa)  ícone na bandeja + janela de
                      configurações (SettingsForm.cs). OK grava o arquivo e envia SIGHUP à lupa,
                      que recarrega no início do próximo quadro (SwitchToModifiedSettings).
 ```
@@ -107,21 +107,35 @@ mouse volta ao modo Mouse; se Alt estiver pressionado nesse momento, o ponteiro 
 | `Program.cs` | `src/main.cpp` | Parcial: sem instância única, sem janela de configurações |
 | `UpdateLoop.cs` | `src/UpdateLoop.cpp` | ✅ fiel (inclui desligamento animado de 1 s) + `render()` por quadro |
 | `Camera.cs` | `src/Camera.cpp` | ✅ todos os passos, incluindo FocusStep e troca de monitor (ChangedScreen). MoveStep não portado: é código morto no original (ver §4) |
-| `Colour.cs`, `Matrix.cs` | `src/Colour.cpp`, `GlassbrickTypes.h` | ✅ fiel (todas as matrizes, "party mode") |
+| `Colour.cs`, `Matrix.cs` | `src/Colour.cpp`, `LupaTypes.h` | ✅ fiel (todas as matrizes, "party mode") |
 | `Reading.cs` | `src/Reading.cpp` + camada em `MagnifierLinux` | ✅ fiel (faixa, linhas-guia, navegação, pan, fade, cor invertida) |
-| `GlassbrickSettings.cs`, `IntModeCycler.cs`, `EnumModeCycler.cs` | `GlassbrickSettings.*`, `GlassbrickTypes.h` | ✅ valores e padrões fiéis (exceto o atalho de cor, trocado de propósito) |
+| `GlassbrickSettings.cs`, `IntModeCycler.cs`, `EnumModeCycler.cs` | `LupaSettings.*`, `LupaTypes.h` | ✅ valores e padrões fiéis (exceto o atalho de cor, trocado de propósito) |
 | `Input.cs` (+ `Gma.UserActivityMonitor`) | `src/InputManager.cpp` | ✅ atalhos, Ctrl+roda, modificadores, todas as teclas/cliques (XInput2) |
 | UI Automation em `Camera.cs` | `src/FocusTracker.cpp` | ✅ foco, caret e seleção via AT-SPI2 |
 | `GuiFocus.cs` | — | Não necessário: no original ninguém assina os eventos dessa classe |
 | `FullscreenMagnifier.cs` / `Win7FullscreenMagnifier.cs` | `src/MagnifierLinux.cpp` | ✅ reimplementado como compositor (§2) |
 | `WindowedMagnifier.cs`, `OverlayForm.cs` | — | ❌ modo janela não implementado |
-| `SettingsManager.cs`, `SettingsFileSettingsManager.cs` | `SettingsManager` + `src/SettingsFile.cpp` | ✅ todas as opções e atalhos em `~/.config/glassbrick/glassbrick.conf`. Sem o evento `Modified` (só faz falta quando houver interface) |
-| `SettingsForm.cs` (6.3 mil linhas) | `ui/glassbrick_ui.py` (Python + GTK3) | ✅ 4 abas, OK/Cancelar/Restaurar padrões, ícone na bandeja com Mostrar/Sair, aviso ao iniciar |
+| `SettingsManager.cs`, `SettingsFileSettingsManager.cs` | `SettingsManager` + `src/SettingsFile.cpp` | ✅ todas as opções e atalhos em `~/.config/lupa_linux/lupa_linux.conf`. Sem o evento `Modified` (só faz falta quando houver interface) |
+| `SettingsForm.cs` (6.3 mil linhas) | `ui/lupa_linux_ui.py` (Python + GTK3) | ✅ 4 abas, OK/Cancelar/Restaurar padrões, ícone na bandeja com Mostrar/Sair, aviso ao iniciar |
 | `Glassbrick.Annotations`, `Autofac*`, `GlassbrickEventSource.cs` | — | Não necessário (DI/telemetria) |
 
 ---
 
 ## 4. Histórico
+
+### Sessão 2026-10-19 (7) — novo nome: Lupa Linux
+
+- O programa deixou de se chamar Glassbrick para deixar claro que é um projeto independente:
+  executável `lupa_linux`, interface `ui/lupa_linux_ui.py`, ícone `ui/lupa_linux.png`, configuração
+  em `~/.config/lupa_linux/lupa_linux.conf`, trava em `$XDG_RUNTIME_DIR/lupa_linux.lock`, variável
+  `LUPA_LINUX_DEBUG`, namespace C++ `LupaLinux`, `LupaSettings.*` / `LupaTypes.h` (antes
+  `GlassbrickSettings.*` / `GlassbrickTypes.h`). Janela e bandeja mostram "Lupa Linux".
+- Menções ao programa **original** (nomes dos arquivos C#, comportamento "do Glassbrick original")
+  continuam com o nome original.
+- Migração: na primeira execução, se `~/.config/lupa_linux/lupa_linux.conf` não existe e
+  `~/.config/glassbrick/glassbrick.conf` existe, a configuração é copiada
+  (`SettingsManager::previousConfigPath`). Testado no Xephyr com um atalho personalizado.
+- As entradas antigas deste histórico foram atualizadas para os nomes novos de arquivos e comandos.
 
 ### Sessão 2026-10-19 (6) — repositório no GitHub
 
@@ -232,7 +246,7 @@ Um amigo do usuário testou e relatou quatro problemas (ambiente dele ainda não
 ### Sessão 2026-10-19 — instância única, navegadores, ferramentas de teste
 
 - **Instância única** (`src/SingleInstance.cpp`, equivalente ao Mutex "Glassbrick" de `Program.cs`):
-  `flock` em `$XDG_RUNTIME_DIR/glassbrick.lock` (liberado pelo sistema mesmo após `kill -9`; o arquivo
+  `flock` em `$XDG_RUNTIME_DIR/lupa_linux.lock` (liberado pelo sistema mesmo após `kill -9`; o arquivo
   não é apagado de propósito, para evitar corrida). A segunda lupa avisa e envia SIGUSR1 à primeira,
   que pede à interface para mostrar a janela de configurações (o original traz a janela à frente).
   Verificado: mensagem + código 0, janela aparecendo, lock liberado após `kill -9`.
@@ -249,7 +263,7 @@ Um amigo do usuário testou e relatou quatro problemas (ambiente dele ainda não
 
 ### Sessão 2026-10-17 (4) — janela de configurações e ícone na bandeja
 
-- **Interface** `ui/glassbrick_ui.py` (Python + GTK3, processo separado: não há headers de GTK para
+- **Interface** `ui/lupa_linux_ui.py` (Python + GTK3, processo separado: não há headers de GTK para
   C++ aqui). Abas do original (Zoom, Rastreamento, Cores, Outros), botões OK / Cancelar / Restaurar
   padrões, campos de atalho com "Gravar" (captura a combinação com grab ativo do teclado) e "Limpar".
   Ícone na bandeja (AyatanaAppIndicator, com fallback Gtk.StatusIcon) com "Mostrar configurações" e
@@ -271,8 +285,8 @@ Um amigo do usuário testou e relatou quatro problemas (ambiente dele ainda não
 ### Sessão 2026-10-17 (3) — configurações completas e atalhos configuráveis
 
 - **Arquivo de configuração completo** (`src/SettingsFile.cpp`): todas as opções de
-  `GlassbrickSettings`, os modos de cada ciclo (`ZoomSpeedModes`, `TrackModes`, `ColourModes`…) e os
-  8 atalhos, em `~/.config/glassbrick/glassbrick.conf` (respeita `$XDG_CONFIG_HOME`; `--config`
+  `LupaSettings`, os modos de cada ciclo (`ZoomSpeedModes`, `TrackModes`, `ColourModes`…) e os
+  8 atalhos, em `~/.config/lupa_linux/lupa_linux.conf` (respeita `$XDG_CONFIG_HOME`; `--config`
   escolhe outro). Formato `Chave = valor` com seções e um comentário explicando cada opção. Valores
   inválidos geram aviso com o número da linha e mantêm o valor anterior. Na primeira execução o
   `glassbrick_config.json` antigo é migrado (sem ser apagado). Documentado em `docs/CONFIGURACAO.md`.
@@ -335,7 +349,7 @@ Um amigo do usuário testou e relatou quatro problemas (ambiente dele ainda não
 - **Testes automatizados** (`tests/test_camera.cpp`, `make test`): lupa e cursor simulados, sem X11.
   Cobrem zoom e liga/desliga, rastreamento Centre e bordas, modo Teclado (caret, seleção, elemento
   focado), volta ao mouse, pulo do ponteiro com Alt e TrackFocus/TrackTyping desligados.
-- `GLASSBRICK_DEBUG=1` imprime eventos de foco/caret/seleção e do modo leitura.
+- `LUPA_LINUX_DEBUG=1` imprime eventos de foco/caret/seleção e do modo leitura.
 
 Verificado na máquina: modo leitura (faixa, linhas-guia nas posições exatas, ampliação junto com a
 tela, Esc), eventos AT-SPI chegando de apps GTK (caret, seleção, foco), saída limpa. Testes da tela
@@ -368,7 +382,7 @@ XDamage; ver sessão 2026-10-19 (4)).
 
 ## 5. Próximos passos (em ordem sugerida)
 
-1. **Confirmar o ambiente do testador** (pedir a saída de `./glassbrick --diagnostico`). Se for
+1. **Confirmar o ambiente do testador** (pedir a saída de `./lupa_linux --diagnostico`). Se for
    Cinnamon ou GNOME Shell: criar um segundo renderizador que use a lupa do próprio compositor pela
    interface D-Bus `org.gnome.Magnifier` (zoom, posição, inversão/contraste), como o original usa a
    API de ampliação do Windows — assim o painel, o menu e o papel de parede aparecem. A camada do
@@ -404,7 +418,7 @@ XDamage; ver sessão 2026-10-19 (4)).
 - `src/SettingsFile.cpp`: leitura/escrita do arquivo de configuração.
 - `docs/CONFIGURACAO.md`: todas as opções do arquivo de configuração.
 - `docs/ATALHOS.md`: lista de atalhos para o usuário.
-- `ui/glassbrick_ui.py`, `ui/config_file.py`, `ui/glassbrick.png`: interface, leitura/escrita do arquivo, ícone.
+- `ui/lupa_linux_ui.py`, `ui/config_file.py`, `ui/lupa_linux.png`: interface, leitura/escrita do arquivo, ícone.
 - `tests/test_ui_config.py`: testes da interface sem tela.
 - `tests/tools/`: ferramentas para testes na tela (`make tools`); leia o aviso em `keys.c` antes de usar.
   `setbg` define um papel de parede de teste e `blink` abre uma janela que pisca — use só num

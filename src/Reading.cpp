@@ -6,15 +6,15 @@
 #include <cstdlib>
 #include <iostream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 static constexpr float TargetOpacity = 0.33f;
 
 static int sign(double v) { return (v > 0) - (v < 0); }
 
-// GLASSBRICK_DEBUG=1 imprime os eventos do modo leitura
+// LUPA_LINUX_DEBUG=1 imprime os eventos do modo leitura
 static bool debugEnabled() {
-    static const bool enabled = std::getenv("GLASSBRICK_DEBUG") != nullptr;
+    static const bool enabled = std::getenv("LUPA_LINUX_DEBUG") != nullptr;
     return enabled;
 }
 #define READING_LOG(msg) do { if (debugEnabled()) std::cerr << "[Reading] " << msg << "\n"; } while (0)
@@ -381,4 +381,4 @@ void Reading::publishOverlay() {
     _magnifier.setReadingOverlay(o);
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

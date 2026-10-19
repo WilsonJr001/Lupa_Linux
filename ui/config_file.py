@@ -1,4 +1,4 @@
-"""Leitura e escrita do arquivo de configuração da lupa (glassbrick.conf).
+"""Leitura e escrita do arquivo de configuração da lupa (lupa_linux.conf).
 
 O formato é o mesmo lido por src/SettingsFile.cpp: "Chave = valor", seções
 [Nome] e comentários com "#". Ao gravar, só o valor das linhas é trocado, então

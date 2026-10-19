@@ -1,13 +1,13 @@
 #include "FocusTracker.h"
 #include "AtspiCompat.h"
 #include "Camera.h"
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Os callbacks do AT-SPI são funções C sem contexto
 static Camera* s_camera = nullptr;
@@ -15,7 +15,7 @@ static Camera* s_camera = nullptr;
 static std::recursive_mutex* s_settingsMutex = nullptr;
 
 static bool debugEnabled() {
-    static const bool enabled = std::getenv("GLASSBRICK_DEBUG") != nullptr;
+    static const bool enabled = std::getenv("LUPA_LINUX_DEBUG") != nullptr;
     return enabled;
 }
 
@@ -180,4 +180,4 @@ void FocusTracker::run() {
     _finished = true;
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

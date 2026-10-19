@@ -9,7 +9,7 @@
 
 extern char** environ;
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Sem os headers de D-Bus nesta máquina, usa o utilitário dbus-send
 std::optional<bool> A11yStatus::isEnabled() {
@@ -63,4 +63,4 @@ void A11yStatus::apply(bool wanted) {
     }
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

@@ -7,7 +7,7 @@
 #include <cstring>
 #include <iostream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Variações de NumLock/CapsLock que precisam ser "grabbadas" junto
 static const unsigned int kLockMasks[] = { 0, LockMask, Mod2Mask, LockMask | Mod2Mask };
@@ -20,9 +20,9 @@ static const auto kGrabWait = std::chrono::milliseconds(60);
 // Teclas tratadas por Reading.HookManager_KeyDown no original
 static const KeySym kReadingKeys[] = { XK_w, XK_a, XK_s, XK_d, XK_q, XK_e, XK_f, XK_Escape };
 
-// GLASSBRICK_DEBUG=1 avisa quando um atalho chegou só pelos eventos raw
+// LUPA_LINUX_DEBUG=1 avisa quando um atalho chegou só pelos eventos raw
 static bool debugEnabled() {
-    static const bool enabled = std::getenv("GLASSBRICK_DEBUG") != nullptr;
+    static const bool enabled = std::getenv("LUPA_LINUX_DEBUG") != nullptr;
     return enabled;
 }
 
@@ -437,4 +437,4 @@ void InputManager::triggerAction(InputAction action, float amount) {
     }
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

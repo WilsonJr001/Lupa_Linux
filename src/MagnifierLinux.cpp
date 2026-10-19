@@ -10,7 +10,7 @@
 #include <cstring>
 #include <iostream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 std::atomic<unsigned long> MagnifierLinux::s_xErrorCount{0};
 
@@ -267,7 +267,7 @@ void MagnifierLinux::initialise() {
     // Click-through: região de entrada vazia
     XShapeCombineRectangles(_display, _overlayWindow, ShapeInput, 0, 0, nullptr, 0, ShapeSet, 0);
 
-    XStoreName(_display, _overlayWindow, "Glassbrick Lupa");
+    XStoreName(_display, _overlayWindow, "Lupa Linux");
     // Pede ao compositor do gerenciador de janelas para não compor a lupa
     Atom bypass = XInternAtom(_display, "_NET_WM_BYPASS_COMPOSITOR", False);
     long one = 1;
@@ -1195,4 +1195,4 @@ void MagnifierLinux::drawMagnified(float zoom, float viewX, float viewY, const s
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

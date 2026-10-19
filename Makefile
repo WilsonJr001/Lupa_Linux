@@ -8,7 +8,7 @@ BINDIR = .
 
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-TARGET = $(BINDIR)/glassbrick
+TARGET = $(BINDIR)/lupa_linux
 
 .PHONY: all clean run test tools
 
@@ -25,7 +25,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 
 # Testes sem servidor X: só os objetos de lógica (libX11 entra apenas para
 # converter nomes de teclas)
-TEST_OBJECTS = $(OBJDIR)/Camera.o $(OBJDIR)/GlassbrickSettings.o $(OBJDIR)/SettingsFile.o
+TEST_OBJECTS = $(OBJDIR)/Camera.o $(OBJDIR)/LupaSettings.o $(OBJDIR)/SettingsFile.o
 TEST_BINS = $(OBJDIR)/test_camera $(OBJDIR)/test_settings
 
 $(OBJDIR)/test_%: tests/test_%.cpp $(TEST_OBJECTS)

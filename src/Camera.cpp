@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Constantes do original
 static constexpr double ZoomSnap = 0.01;
@@ -735,4 +735,4 @@ void Camera::updateLoop(double dt) {
     }
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

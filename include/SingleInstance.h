@@ -3,7 +3,7 @@
 #include <string>
 #include <sys/types.h>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Garante uma única lupa por usuário (equivalente ao Mutex "Glassbrick" de
 // Program.cs). Usa flock() num arquivo em $XDG_RUNTIME_DIR: o sistema libera o
@@ -26,4 +26,4 @@ private:
     pid_t _otherPid = 0;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

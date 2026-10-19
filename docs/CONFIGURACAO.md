@@ -12,26 +12,29 @@ original (Zoom, Rastreamento, Cores, Outros) e os botões:
 - **Cancelar** (ou fechar a janela) — descarta as mudanças; a janela some, mas o ícone continua na bandeja;
 - **Restaurar padrões** — preenche a janela com os valores padrão (só grava ao clicar em Aplicar ou OK).
 
-Antes de gravar, a janela pede à lupa que confira o arquivo (`./glassbrick --verificar-config arquivo`);
+Antes de gravar, a janela pede à lupa que confira o arquivo (`./lupa_linux --verificar-config arquivo`);
 se a lupa recusar algum valor, aparece uma mensagem com a linha e a opção, e nada é gravado.
 
 No menu do ícone, **Sair** encerra a lupa. A janela também pode ser aberta sem a lupa, só para editar o
-arquivo: `python3 ui/glassbrick_ui.py --show`. Para iniciar a lupa sem o ícone na bandeja:
-`./glassbrick --sem-interface`.
+arquivo: `python3 ui/lupa_linux_ui.py --show`. Para iniciar a lupa sem o ícone na bandeja:
+`./lupa_linux --sem-interface`.
 
 O arquivo continua podendo ser editado à mão; a janela preserva os comentários e só troca os valores.
 
-Só uma lupa roda por vez (como no original). Abrir `./glassbrick` de novo não cria outra: a janela de
+Só uma lupa roda por vez (como no original). Abrir `./lupa_linux` de novo não cria outra: a janela de
 configurações da lupa que já está aberta aparece.
 
 ## Onde fica o arquivo
 
-`~/.config/glassbrick/glassbrick.conf` (ou `$XDG_CONFIG_HOME/glassbrick/glassbrick.conf`).
+`~/.config/lupa_linux/lupa_linux.conf` (ou `$XDG_CONFIG_HOME/lupa_linux/lupa_linux.conf`).
 
 - É criado na primeira execução, com todos os valores padrão e um comentário explicando cada opção.
+- Se você usava a versão de quando o programa se chamava `glassbrick`, a configuração de
+  `~/.config/glassbrick/glassbrick.conf` é copiada para o lugar novo nessa primeira execução (a antiga
+  não é apagada).
 - Se existir um `glassbrick_config.json` (formato antigo) na pasta onde o programa foi aberto, os
   valores dele são aproveitados nessa primeira execução. O arquivo antigo não é apagado.
-- Para usar outro arquivo: `./glassbrick --config caminho/do/arquivo.conf`.
+- Para usar outro arquivo: `./lupa_linux --config caminho/do/arquivo.conf`.
 - Para voltar aos padrões: apague o arquivo; ele será recriado.
 
 Alterações feitas à mão no arquivo valem na próxima vez que a lupa for aberta, ou na hora com
@@ -55,7 +58,7 @@ Chave = valor        # comentário no fim da linha também vale
   número da linha e mantém o valor anterior. Exemplo:
 
   ```
-  [Config] Aviso: /home/voce/.config/glassbrick/glassbrick.conf:10: RefreshRate = 500: fora do intervalo 10–240; mantido o valor anterior
+  [Config] Aviso: /home/voce/.config/lupa_linux/lupa_linux.conf:10: RefreshRate = 500: fora do intervalo 10–240; mantido o valor anterior
   ```
 
 ## Opções

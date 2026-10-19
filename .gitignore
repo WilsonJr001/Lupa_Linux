@@ -1,6 +1,6 @@
 # Compilação
 obj/
-/glassbrick
+/lupa_linux
 __pycache__/
 *.pyc
 

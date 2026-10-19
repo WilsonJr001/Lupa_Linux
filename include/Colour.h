@@ -1,12 +1,12 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
-#include "GlassbrickSettings.h"
+#include "LupaTypes.h"
+#include "LupaSettings.h"
 #include "IMagnifier.h"
 #include <mutex>
 #include <random>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Motor de Cores e Acessibilidade (equivalente a Colour.cs)
 class Colour {
@@ -53,4 +53,4 @@ public:
     const Matrix& getTargetMatrix() const { return _target; }
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

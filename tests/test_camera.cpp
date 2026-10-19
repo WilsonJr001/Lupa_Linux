@@ -2,13 +2,13 @@
 // cursor é simulado. Rode com `make test`.
 
 #include "Camera.h"
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include "IMagnifier.h"
 #include <cmath>
 #include <cstdio>
 #include <string>
 
-using namespace Glassbrick;
+using namespace LupaLinux;
 
 namespace {
 
@@ -28,7 +28,7 @@ struct Fixture;
 const Fixture* g_last = nullptr;
 
 struct Fixture {
-    SettingsManager settings{"/nonexistent/glassbrick_test.conf"};
+    SettingsManager settings{"/nonexistent/lupa_linux_test.conf"};
     FakeMagnifier mag;
     Camera camera{settings, mag, W, H};
     Point2D cursor{W / 2, H / 2};

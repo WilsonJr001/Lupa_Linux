@@ -91,7 +91,7 @@ def test_magnifier_check(exe):
 
 
 if __name__ == "__main__":
-    exe = sys.argv[1] if len(sys.argv) > 1 else "./glassbrick"
+    exe = sys.argv[1] if len(sys.argv) > 1 else "./lupa_linux"
     test_with_real_default_file(exe)
     test_missing_keys()
     test_bindings()

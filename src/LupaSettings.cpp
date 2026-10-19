@@ -1,28 +1,28 @@
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include <X11/keysym.h>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
-const std::vector<float> GlassbrickSettings::ZoomSpeeds = {
+const std::vector<float> LupaSettings::ZoomSpeeds = {
     1.0f / 32.0f, 0.0625f, 0.125f, 0.25f, 0.0f
 };
 
-const std::vector<float> GlassbrickSettings::ZoomAmounts = {
+const std::vector<float> LupaSettings::ZoomAmounts = {
     0.0625f, 0.125f, 0.25f, 0.5f, 1.0f
 };
 
-const std::vector<float> GlassbrickSettings::ColourTransitions = {
+const std::vector<float> LupaSettings::ColourTransitions = {
     1.0f / 48.0f, 0.0625f, 0.125f, 0.25f, 0.0f
 };
 
-const std::vector<float> GlassbrickSettings::TrackSpeeds = {
+const std::vector<float> LupaSettings::TrackSpeeds = {
     1.0f / 32.0f, 0.0625f, 0.125f, 0.25f, 1.0f / 3.0f
 };
 
-GlassbrickSettings::GlassbrickSettings()
+LupaSettings::LupaSettings()
     : ZoomSpeedActual(2, static_cast<int>(ZoomSpeeds.size()), [](int m) { return ZoomSpeeds[m]; }),
       ZoomAmountActual(2, static_cast<int>(ZoomAmounts.size()), [](int m) { return ZoomAmounts[m]; }),
       CurrentTrackModeActual(TrackMode::Border, {
@@ -36,7 +36,7 @@ GlassbrickSettings::GlassbrickSettings()
     resetToDefaults();
 }
 
-void GlassbrickSettings::resetToDefaults() {
+void LupaSettings::resetToDefaults() {
     Bindings.clear();
     // XK_grave aqui significa a tecla física à esquerda do "1" (Keys 192 /
     // VK_OEM_3 no original): ` no teclado americano, ' no ABNT2. O
@@ -137,18 +137,18 @@ void GlassbrickSettings::resetToDefaults() {
     CursorKeysArrows = false;
 }
 
-const KeyBinding* GlassbrickSettings::bindingFor(InputAction action) const {
+const KeyBinding* LupaSettings::bindingFor(InputAction action) const {
     for (const auto& b : Bindings) {
         if (b.action == action) return &b;
     }
     return nullptr;
 }
 
-void GlassbrickSettings::setBinding(InputAction action, Modifiers modifiers, unsigned int keySym) {
+void LupaSettings::setBinding(InputAction action, Modifiers modifiers, unsigned int keySym) {
     Bindings.erase(std::remove_if(Bindings.begin(), Bindings.end(),
                                   [action](const KeyBinding& b) { return b.action == action; }),
                    Bindings.end());
     if (keySym != 0) Bindings.emplace_back(modifiers, keySym, action);
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

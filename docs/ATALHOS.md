@@ -1,6 +1,6 @@
-# Atalhos da Lupa Linux (clone do Glassbrick)
+# Atalhos da Lupa Linux (inspirada no Glassbrick)
 
-Todos os atalhos abaixo são **globais**: funcionam em qualquer janela enquanto o `./glassbrick` estiver
+Todos os atalhos abaixo são **globais**: funcionam em qualquer janela enquanto o `./lupa_linux` estiver
 rodando. São os padrões do Glassbrick original (`GlassbrickSettings.ResetToDefaults`), com uma
 exceção: o atalho de cor (ver "Cores"). **Todos podem ser trocados ou desligados** no arquivo de
 configuração (ver o fim deste documento).
@@ -200,7 +200,7 @@ hora, sem precisar reabrir.
 Os atalhos funcionam mesmo com um menu aberto (o menu Iniciar, por exemplo), que normalmente prende o
 teclado e o mouse só para ele.
 
-**Pelo arquivo:** os atalhos ficam na seção `[Atalhos]` de `~/.config/glassbrick/glassbrick.conf`,
+**Pelo arquivo:** os atalhos ficam na seção `[Atalhos]` de `~/.config/lupa_linux/lupa_linux.conf`,
 criado na primeira execução. Depois de editar, reabra a lupa (ou envie `kill -HUP <pid da lupa>`):
 
 ```ini

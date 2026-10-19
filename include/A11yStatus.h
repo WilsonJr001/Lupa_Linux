@@ -2,7 +2,7 @@
 
 #include <optional>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Liga/desliga o sinal de acessibilidade da sessão (propriedade
 // org.a11y.Status.IsEnabled do barramento org.a11y.Bus). Com ele ligado, o
@@ -25,4 +25,4 @@ private:
     bool _changedByUs = false;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

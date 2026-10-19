@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMagnifier.h"
-#include "GlassbrickTypes.h"
+#include "LupaTypes.h"
 #include <X11/Xlib.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Lupa em tela cheia para X11 (equivalente a FullscreenMagnifier.cs).
 //
@@ -238,4 +238,4 @@ private:
     static std::atomic<unsigned long> s_xErrorCount;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

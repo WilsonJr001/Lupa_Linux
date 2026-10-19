@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
-#include "GlassbrickSettings.h"
+#include "LupaTypes.h"
+#include "LupaSettings.h"
 #include "Camera.h"
 #include "Colour.h"
 #include "Reading.h"
@@ -12,7 +12,7 @@
 #include <thread>
 #include <vector>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Entrada global (equivalente a Input.cs + partes de HookManager).
 //
@@ -100,4 +100,4 @@ private:
     std::map<int, std::chrono::steady_clock::time_point> _lastCoreShortcut;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

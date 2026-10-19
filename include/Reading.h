@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
-#include "GlassbrickSettings.h"
+#include "LupaTypes.h"
+#include "LupaSettings.h"
 #include "IMagnifier.h"
 #include <algorithm>
 #include <atomic>
@@ -9,7 +9,7 @@
 #include <mutex>
 #include <vector>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 class Camera;
 
@@ -122,4 +122,4 @@ private:
     Flags _flag;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

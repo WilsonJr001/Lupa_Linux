@@ -1,14 +1,14 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
-#include "GlassbrickSettings.h"
+#include "LupaTypes.h"
+#include "LupaSettings.h"
 #include "IMagnifier.h"
 #include <chrono>
 #include <functional>
 #include <mutex>
 #include <vector>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Motor de câmera (equivalente a Camera.cs).
 //
@@ -165,7 +165,7 @@ private:
     void readingOffsetStep();
     void updateStep();
 
-    const GlassbrickSettings& settings() const { return _settingsManager.getSettings(); }
+    const LupaSettings& settings() const { return _settingsManager.getSettings(); }
 
     SettingsManager& _settingsManager;
     IMagnifier& _magnifier;
@@ -191,4 +191,4 @@ private:
     std::chrono::steady_clock::time_point _lastZoomTime = std::chrono::steady_clock::now();
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

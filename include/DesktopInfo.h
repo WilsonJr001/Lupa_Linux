@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // O que a lupa consegue enxergar do ambiente gráfico. A lupa só desenha janelas
 // X (e o papel de parede publicado em _XROOTPMAP_ID). Em ambientes como
@@ -27,4 +27,4 @@ struct DesktopInfo {
     std::string report() const;
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

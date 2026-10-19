@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <map>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Modos de rastreamento da câmera
 enum class TrackMode {
@@ -402,4 +402,4 @@ public:
     }
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

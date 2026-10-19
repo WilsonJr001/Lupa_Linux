@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
+#include "LupaTypes.h"
 #include <optional>
 #include <string>
 #include <vector>
@@ -9,7 +9,7 @@
 #include <functional>
 #include <mutex>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 // Atalho de teclado (KeyBinding.cs). Cada ação tem no máximo um atalho.
 // keySym é um KeySym X11; XK_grave tem significado especial: a tecla física à
@@ -23,7 +23,7 @@ struct KeyBinding {
         : modifiers(m), keySym(k), action(a) {}
 };
 
-class GlassbrickSettings {
+class LupaSettings {
 public:
     static const std::vector<float> ZoomSpeeds;
     static const std::vector<float> ZoomAmounts;
@@ -85,7 +85,7 @@ public:
 
     std::vector<KeyBinding> Bindings;
 
-    GlassbrickSettings();
+    LupaSettings();
 
     void resetToDefaults();
 
@@ -144,18 +144,20 @@ const char* inputActionName(InputAction action);
 
 class SettingsManager {
 private:
-    GlassbrickSettings _settings;
+    LupaSettings _settings;
     std::string _configPath;
     bool _modified = false;
 
 public:
     explicit SettingsManager(const std::string& configPath);
 
-    // ~/.config/glassbrick/glassbrick.conf (respeita $XDG_CONFIG_HOME)
+    // ~/.config/lupa_linux/lupa_linux.conf (respeita $XDG_CONFIG_HOME)
     static std::string defaultConfigPath();
+    // Onde a configuração ficava quando o programa se chamava glassbrick
+    static std::string previousConfigPath();
 
-    const GlassbrickSettings& getSettings() const { return _settings; }
-    GlassbrickSettings& getSettingsMutable() { return _settings; }
+    const LupaSettings& getSettings() const { return _settings; }
+    LupaSettings& getSettingsMutable() { return _settings; }
     const std::string& configPath() const { return _configPath; }
 
     bool load(std::vector<std::string>& warnings);
@@ -186,4 +188,4 @@ public:
     void clearModified() { _modified = false; }
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

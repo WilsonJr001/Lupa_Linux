@@ -1,6 +1,6 @@
 // Testes da leitura/escrita do arquivo de configuração. Rode com `make test`.
 
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include <X11/keysym.h>
 #include <cstdio>
 #include <filesystem>
@@ -9,7 +9,7 @@
 #include <string>
 #include <unistd.h>
 
-using namespace Glassbrick;
+using namespace LupaLinux;
 
 namespace {
 
@@ -21,7 +21,7 @@ void check(bool ok, const std::string& what) {
 }
 
 std::string tempPath(const std::string& name) {
-    return (std::filesystem::temp_directory_path() / ("glassbrick_test_" + std::to_string(getpid()) + "_" + name)).string();
+    return (std::filesystem::temp_directory_path() / ("lupa_linux_test_" + std::to_string(getpid()) + "_" + name)).string();
 }
 
 std::string readAll(const std::string& path) {
@@ -40,14 +40,14 @@ bool hasWarningContaining(const std::vector<std::string>& w, const std::string& 
     return false;
 }
 
-bool bindingIs(const GlassbrickSettings& s, InputAction a, Modifiers m, unsigned int sym) {
+bool bindingIs(const LupaSettings& s, InputAction a, Modifiers m, unsigned int sym) {
     const KeyBinding* b = s.bindingFor(a);
     return b && b->modifiers == m && b->keySym == sym;
 }
 
 void testDefaults() {
     std::puts("Padrões");
-    GlassbrickSettings s;
+    LupaSettings s;
     check(s.Bindings.size() == 8, "8 atalhos, um por ação");
     check(bindingIs(s, InputAction::ZoomOnToggle, Modifiers::Alt, XK_grave), "ZoomOnToggle = Alt+grave");
     check(bindingIs(s, InputAction::ColourModeCycle, Modifiers::Control | Modifiers::Alt, XK_grave),
@@ -57,7 +57,7 @@ void testDefaults() {
 
 void testRoundTrip() {
     std::puts("Salvar e ler de volta preserva tudo");
-    GlassbrickSettings a;
+    LupaSettings a;
     a.RefreshRate = 75;
     a.ZoomSpeedActual.setMode(4);
     a.ZoomAmountActual.setModeEnabled(3, true);
@@ -75,7 +75,7 @@ void testRoundTrip() {
     const std::string p1 = tempPath("a.conf"), p2 = tempPath("b.conf");
     check(a.saveToFile(p1), "salvou o arquivo");
 
-    GlassbrickSettings b;
+    LupaSettings b;
     std::vector<std::string> w;
     check(b.loadFromFile(p1, w), "leu o arquivo");
     check(w.empty(), "sem avisos ao ler o próprio arquivo" + (w.empty() ? "" : " (" + w.front() + ")"));
@@ -134,7 +134,7 @@ void testInvalidValues() {
               "ZoomOut = Alt+1\n"
               "AcaoInventada = Alt+x\n"
               "linha sem igual\n");
-    GlassbrickSettings s;
+    LupaSettings s;
     std::vector<std::string> w;
     s.loadFromFile(p, w);
     check(s.RefreshRate == 60 && hasWarningContaining(w, "RefreshRate"), "RefreshRate fora do intervalo");
@@ -154,11 +154,11 @@ void testLegacyFormat() {
     std::puts("Formato antigo (glassbrick_config.json)");
     const std::string p = tempPath("legacy.json");
     writeFile(p,
-              "# Configuração Glassbrick Clone (Lupa Linux)\n"
+              "# Configuração da Lupa Linux\n"
               "RefreshRate=60\nTrackSpeedIndex=3\nColourTransitionIndex=1\nClampEdge=false\n"
               "PushEdge=true\nMouseAccelerate=true\nColourTintAmount=0.5\n"
               "ColourInvertSaturation=0.4\nTrackBorderSizeBorder=0.5\n");
-    GlassbrickSettings s;
+    LupaSettings s;
     std::vector<std::string> w;
     check(s.loadFromFile(p, w), "leu o arquivo antigo");
     check(w.empty(), "sem avisos");
@@ -170,7 +170,7 @@ void testLegacyFormat() {
 void testManagerCreatesDirectory() {
     std::puts("SettingsManager");
     const std::string dir = tempPath("dir");
-    const std::string p = dir + "/sub/glassbrick.conf";
+    const std::string p = dir + "/sub/lupa_linux.conf";
     SettingsManager m(p);
     std::vector<std::string> w;
     check(!m.load(w), "arquivo inexistente => load() falso");
@@ -178,10 +178,10 @@ void testManagerCreatesDirectory() {
     std::filesystem::remove_all(dir);
 
     setenv("XDG_CONFIG_HOME", "/tmp/xdgteste", 1);
-    check(SettingsManager::defaultConfigPath() == "/tmp/xdgteste/glassbrick/glassbrick.conf", "respeita $XDG_CONFIG_HOME");
+    check(SettingsManager::defaultConfigPath() == "/tmp/xdgteste/lupa_linux/lupa_linux.conf", "respeita $XDG_CONFIG_HOME");
     unsetenv("XDG_CONFIG_HOME");
     setenv("HOME", "/home/fulano", 1);
-    check(SettingsManager::defaultConfigPath() == "/home/fulano/.config/glassbrick/glassbrick.conf", "padrão ~/.config");
+    check(SettingsManager::defaultConfigPath() == "/home/fulano/.config/lupa_linux/lupa_linux.conf", "padrão ~/.config");
 }
 
 void testReload() {

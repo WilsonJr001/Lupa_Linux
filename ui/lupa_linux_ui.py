@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ícone na bandeja e janela de configurações da Lupa Linux (equivalente a SettingsForm.cs).
 
-Normalmente é aberto pela própria lupa (./glassbrick), que passa --pid, --config e --exe.
+Normalmente é aberto pela própria lupa (./lupa_linux), que passa --pid, --config e --exe.
 - Aplicar e OK gravam o arquivo de configuração (depois de a lupa conferi-lo com
   --verificar-config) e enviam SIGHUP à lupa, que recarrega sem reiniciar. OK também
   fecha a janela.
@@ -9,7 +9,7 @@ Normalmente é aberto pela própria lupa (./glassbrick), que passa --pid, --conf
 - Fechar a janela só a esconde, como no original (que minimiza para a bandeja).
 
 Também pode ser usado sozinho para editar o arquivo:
-    python3 ui/glassbrick_ui.py --show [--config caminho]
+    python3 ui/lupa_linux_ui.py --show [--config caminho]
 """
 
 import argparse
@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config_file as cf  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ICON = os.path.join(HERE, "glassbrick.png")
+ICON = os.path.join(HERE, "lupa_linux.png")
 DOCS = os.path.normpath(os.path.join(HERE, "..", "docs"))
 VERSION = "2.2 (clone para Linux)"
 
@@ -181,7 +181,7 @@ class ShortcutEntry(Gtk.Box):
 
 class SettingsWindow(Gtk.Window):
     def __init__(self, app):
-        super().__init__(title="Glassbrick — Configurações")
+        super().__init__(title="Lupa Linux — Configurações")
         self.app = app
         self.set_icon_from_file(ICON)
         self.set_default_size(620, 560)
@@ -517,7 +517,7 @@ class SettingsWindow(Gtk.Window):
         title.pack_start(Gtk.Image.new_from_pixbuf(GdkPixbuf.Pixbuf.new_from_file_at_size(ICON, 48, 48)),
                          False, False, 0)
         name = Gtk.Label(xalign=0)
-        name.set_markup(f"<b>Glassbrick | Lupa de tela</b>\nVersão {VERSION}")
+        name.set_markup(f"<b>Lupa Linux | Lupa de tela</b>\nVersão {VERSION}")
         title.pack_start(name, False, False, 0)
         about.pack_start(title, False, False, 0)
         about.pack_start(self._hint(f"Arquivo de configuração: {self.app.config_path}"), False, False, 0)
@@ -653,16 +653,16 @@ class App:
         try:
             gi.require_version("AyatanaAppIndicator3", "0.1")
             from gi.repository import AyatanaAppIndicator3 as AppIndicator
-            self.indicator = AppIndicator.Indicator.new("glassbrick", ICON,
+            self.indicator = AppIndicator.Indicator.new("lupa_linux", ICON,
                                                         AppIndicator.IndicatorCategory.APPLICATION_STATUS)
             self.indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE)
-            self.indicator.set_title("Glassbrick")
+            self.indicator.set_title("Lupa Linux")
             self.indicator.set_menu(menu)
             self.indicator.set_secondary_activate_target(show)  # clique do meio abre as configurações
         except (ValueError, ImportError):
             # Sem AppIndicator: ícone clássico (XEmbed). Clique abre as configurações
             icon = Gtk.StatusIcon.new_from_file(ICON)
-            icon.set_tooltip_text("Glassbrick")
+            icon.set_tooltip_text("Lupa Linux")
             icon.connect("activate", lambda *_: self.show_window())
             icon.connect("popup-menu", lambda i, b, t: menu.popup(None, None, Gtk.StatusIcon.position_menu, i, b, t))
             self.indicator = icon
@@ -672,8 +672,8 @@ class App:
         try:
             gi.require_version("Notify", "0.7")
             from gi.repository import Notify
-            Notify.init("Glassbrick")
-            Notify.Notification.new("Glassbrick", "A lupa está ativa. Configurações no ícone da bandeja.", ICON).show()
+            Notify.init("Lupa Linux")
+            Notify.Notification.new("Lupa Linux", "A lupa está ativa. Configurações no ícone da bandeja.", ICON).show()
         except Exception:  # noqa: BLE001 - aviso é opcional
             pass
 
@@ -709,7 +709,7 @@ class App:
             return self.default_config() or {}
 
     def default_config_text(self):
-        exe = self.exe or os.path.join(HERE, "..", "glassbrick")
+        exe = self.exe or os.path.join(HERE, "..", "lupa_linux")
         try:
             return subprocess.run([exe, "--print-default-config"], capture_output=True, text=True,
                                   check=True, timeout=5).stdout
@@ -755,7 +755,7 @@ class App:
         A lupa é quem lê o arquivo de verdade, então é ela que decide o que vale
         (evita a interface aceitar um atalho que a lupa ignoraria em silêncio).
         """
-        exe = self.exe or os.path.join(HERE, "..", "glassbrick")
+        exe = self.exe or os.path.join(HERE, "..", "lupa_linux")
         try:
             result = subprocess.run([exe, "--verificar-config", path], capture_output=True, text=True, timeout=5)
         except (OSError, subprocess.SubprocessError):
@@ -790,11 +790,11 @@ class App:
 
 def main():
     default_config = os.path.join(os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config"),
-                                  "glassbrick", "glassbrick.conf")
-    parser = argparse.ArgumentParser(description="Configurações da Lupa Linux (Glassbrick)")
+                                  "lupa_linux", "lupa_linux.conf")
+    parser = argparse.ArgumentParser(description="Configurações da Lupa Linux")
     parser.add_argument("--pid", type=int, help="PID da lupa (para recarregar e para o menu Sair)")
     parser.add_argument("--config", default=default_config, help="arquivo de configuração")
-    parser.add_argument("--exe", help="caminho do executável glassbrick (para obter os padrões)")
+    parser.add_argument("--exe", help="caminho do executável lupa_linux (para obter os padrões)")
     parser.add_argument("--show", action="store_true", help="abre a janela ao iniciar")
     args = parser.parse_args()
     App(args)

@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <sstream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 namespace {
 
@@ -125,4 +125,4 @@ std::string DesktopInfo::report() const {
     return o.str();
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

@@ -2,7 +2,7 @@
 #include <chrono>
 #include <iostream>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 UpdateLoop::UpdateLoop(SettingsManager& settings, IMagnifier& magnifier,
                        Camera& camera, Colour& colour, Reading& reading)
@@ -92,4 +92,4 @@ void UpdateLoop::runLoop() {
     std::cout << "[UpdateLoop] Loop encerrado.\n";
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

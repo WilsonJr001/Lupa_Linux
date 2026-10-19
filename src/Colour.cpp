@@ -1,7 +1,7 @@
 #include "Colour.h"
 #include <cmath>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 Colour::Colour(const SettingsManager& settings, IMagnifier& magnifier)
     : _settingsManager(settings),
@@ -437,4 +437,4 @@ void Colour::colourUpdateStep(double dt) {
     }
 }
 
-} // namespace Glassbrick
+} // namespace LupaLinux

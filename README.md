@@ -45,11 +45,11 @@ sudo apt install g++ make libx11-dev libgl-dev \
 ## Como compilar e usar
 
 ```sh
-git clone https://github.com/WilsonJr001/lupa-linux.git
-cd lupa-linux
-make            # gera ./glassbrick
+git clone https://github.com/WilsonJr001/Lupa_Linux.git
+cd Lupa_Linux
+make            # gera ./lupa_linux
 make test       # (opcional) roda os testes
-./glassbrick    # inicia a lupa e o ícone na bandeja
+./lupa_linux    # inicia a lupa e o ícone na bandeja
 ```
 
 Atalhos principais (padrão):
@@ -62,10 +62,10 @@ Atalhos principais (padrão):
 | Ctrl + ` | Trocar o modo de acompanhamento |
 | Alt + R | Modo leitura |
 
-A configuração fica em `~/.config/glassbrick/glassbrick.conf` e pode ser mudada pela janela de
+A configuração fica em `~/.config/lupa_linux/lupa_linux.conf` e pode ser mudada pela janela de
 configurações (clique no ícone da bandeja → *Mostrar configurações*).
 
-Se algo não aparecer na lupa, rode `./glassbrick --diagnostico` e envie o resultado ao abrir uma
+Se algo não aparecer na lupa, rode `./lupa_linux --diagnostico` e envie o resultado ao abrir uma
 issue.
 
 ## Limitações conhecidas

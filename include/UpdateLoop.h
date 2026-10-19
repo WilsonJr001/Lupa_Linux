@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GlassbrickSettings.h"
+#include "LupaSettings.h"
 #include "IMagnifier.h"
 #include "Camera.h"
 #include "Colour.h"
@@ -8,7 +8,7 @@
 #include <atomic>
 #include <thread>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 class UpdateLoop {
 private:
@@ -33,4 +33,4 @@ public:
     bool isRunning() const { return _running; }
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GlassbrickTypes.h"
+#include "LupaTypes.h"
 #include <atomic>
 #include <thread>
 
-namespace Glassbrick {
+namespace LupaLinux {
 
 class Camera;
 class SettingsManager;
@@ -40,4 +40,4 @@ private:
     std::atomic<bool> _finished{false};
 };
 
-} // namespace Glassbrick
+} // namespace LupaLinux
