@@ -1,0 +1,15 @@
+# Compilação
+obj/
+/glassbrick
+__pycache__/
+*.pyc
+
+# Material do programa original (proprietário): fica só na máquina de quem
+# desenvolve, como referência de comportamento, e NÃO é distribuído
+codigo_glassbrick/
+*.exe
+Lupa_Linux_Project.gpr
+Lupa_Linux_Project.rep/
+
+# Configuração pessoal antiga
+glassbrick_config.json
